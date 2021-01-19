@@ -1,0 +1,30 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+    container_name: simple_pm_api
+    volumes:
+      - '.:/simple_pm_api/'
+    ports:
+      - '8000:8000'
+    command: air
+    tty: true
+
+  db:
+    image: postgres:12.4-alpine
+    container_name: db_simple_pm
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db_simple_pm
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8 --locale=C
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./docker/postgresql/initdb:/docker-entrypoint-initdb.d
+    ports:
+      - '5432:5432'
+
+volumes:
+  db_data:
+    driver: local
