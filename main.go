@@ -5,9 +5,7 @@ import (
 	"simple_pm_api/pkg/core"
 	v1ApiRouter "simple_pm_api/routers/v1"
 	"strconv"
-	"strings"
 
-	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,8 +23,9 @@ func main() {
 	// 環境変数ファイル読み込み
 	core.LoadEnv(".env")
 
-	// CORSの設定
-	attachCORS(router)
+	// ミドルウェアの設定
+	router.Use(core.CORSMiddleware())
+	router.Use(core.ProcessRequestMiddleware())
 
 	// v1APIルーター
 	v1ApiRouter.Router(router)
@@ -36,12 +35,4 @@ func main() {
 	} else {
 		router.Run(":8000")
 	}
-}
-
-// attachCORS CORSの設定
-func attachCORS(router *gin.Engine) {
-	corsConfig := cors.DefaultConfig()
-	corsConfig.AllowOrigins = strings.Split(os.Getenv("ALLOW_ORIGINS"), ",")
-	corsConfig.AllowHeaders = strings.Split(os.Getenv("ALLOW_HEADERS"), ",")
-	router.Use(cors.New(corsConfig))
 }

@@ -15,7 +15,7 @@ import (
 // Router ルーター
 func Router(router *gin.Engine) {
 	// 疎通確認用
-	router.GET("/", test)
+	router.GET("/api/test", test)
 
 	// Swagger-UIの設定
 	debugMode, _ := strconv.ParseBool(os.Getenv("DEBUG"))
