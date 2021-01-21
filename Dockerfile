@@ -12,4 +12,5 @@ RUN apk update \
 
 RUN go get github.com/cosmtrek/air \
     && go get github.com/swaggo/swag/cmd/swag \
+    && go get github.com/lib/pq \
     && go get github.com/golang-migrate/migrate/v4

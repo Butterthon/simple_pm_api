@@ -1,6 +1,6 @@
 package responses
 
-// JSONResponse レスポンス
+// JSONResponse ...
 type JSONResponse struct {
 	Data interface{} `json: "data"`
 }

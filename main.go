@@ -4,6 +4,7 @@ import (
 	"os"
 	"simple_pm_api/pkg/core"
 	v1ApiRouter "simple_pm_api/routers/v1"
+	"simple_pm_api/services"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -26,6 +27,12 @@ func main() {
 	// ミドルウェアの設定
 	router.Use(core.CORSMiddleware())
 	router.Use(core.ProcessRequestMiddleware())
+
+	// DBコネクション
+	services.DBConnectionSetup()
+
+	// DBコネクション解放
+	defer services.CloseDBConnection()
 
 	// v1APIルーター
 	v1ApiRouter.Router(router)

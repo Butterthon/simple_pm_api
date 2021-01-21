@@ -6,6 +6,7 @@ import (
 	"strconv"
 
 	_ "simple_pm_api/docs" // swag initで生成したdocsフォルダ
+	"simple_pm_api/routers/api/v1/project"
 
 	"github.com/gin-gonic/gin"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -16,6 +17,9 @@ import (
 func Router(router *gin.Engine) {
 	// 疎通確認用
 	router.GET("/api/test", test)
+
+	// プロジェクト関連
+	router.POST("/api/project", project.Create)
 
 	// Swagger-UIの設定
 	debugMode, _ := strconv.ParseBool(os.Getenv("DEBUG"))
