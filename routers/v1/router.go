@@ -19,6 +19,7 @@ func Router(router *gin.Engine) {
 	router.GET("/api/test", test)
 
 	// プロジェクト関連
+	router.GET("/api/project", project.Gets)
 	router.POST("/api/project", project.Create)
 
 	// Swagger-UIの設定

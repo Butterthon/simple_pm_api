@@ -8,7 +8,17 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// Project プロジェクトの構造体
 type Project models.Project
+
+// Gets 全件取得
+func Gets(transaction *gorm.DB, context *gin.Context) ([]Project, error) {
+	var projects []Project
+	if err := transaction.Find(&projects).Error; err != nil {
+		return projects, err
+	}
+	return projects, nil
+}
 
 // Create プロジェクト登録
 func Create(transaction *gorm.DB, context *gin.Context) (Project, error) {

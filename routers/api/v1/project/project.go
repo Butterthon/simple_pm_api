@@ -8,6 +8,22 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Gets 全件取得
+// @Summary プロジェクト全件取得
+// @Producs json
+// @Success 200 {object} []models.Project
+// @Failure 400 {object} exceptions.APIException(detail={})
+// @Failure 422 {object} exceptions.APIException(detail={})
+// @Failure 500 {object} exceptions.APIException(detail={})
+// @Router /project/ [get]
+func Gets(context *gin.Context) {
+	projects, err := project_service.Gets(services.GetOrm(), context)
+	if err != nil {
+		return
+	}
+	context.JSON(http.StatusOK, projects)
+}
+
 // Create プロジェクト登録
 // @Summary プロジェクト登録
 // @Producs json
@@ -23,7 +39,6 @@ func Create(context *gin.Context) {
 	project, err := project_service.Create(transaction, context)
 	if err != nil {
 		transaction.Rollback()
-		println("ロールバック")
 		return
 	}
 	context.JSON(http.StatusOK, project)
